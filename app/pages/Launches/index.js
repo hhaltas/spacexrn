@@ -1,11 +1,24 @@
-import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {center} from '../../components/styles/other';
 import {backgroundScreen, cSearch} from '../../components/styles/color';
 import {SmallButton} from '../../components/Form';
 
 const LaunchesScreen = ({data, navigation, HeaderTitle}) => {
-  useEffect(() => {}, []);
+  const [arr, setArr] = useState();
+  const [load, setLoad] = useState(false);
+  useEffect(() => {
+    setArr(data);
+    setLoad(true);
+  }, [data]);
   const renderItem = item => {
     return (
       <View
@@ -16,10 +29,10 @@ const LaunchesScreen = ({data, navigation, HeaderTitle}) => {
               item.index % 2 === 1 ? backgroundScreen : '#fdfdfd',
           },
         ]}>
-        {item.item.links.patch.large !== null ? (
+        {item.item?.links?.patch?.large !== null ? (
           <View style={{...center}}>
             <Image
-              source={{uri: item.item.links.patch.large}}
+              source={{uri: item.item?.links?.patch?.large}}
               style={{
                 ...center,
                 width: 250,
@@ -49,6 +62,7 @@ const LaunchesScreen = ({data, navigation, HeaderTitle}) => {
             bgColor={cSearch}
             onPress={() =>
               navigation.navigate('LaunchesDetail', {
+                name: 'hasan',
                 item: item.item,
               })
             }>
@@ -58,6 +72,13 @@ const LaunchesScreen = ({data, navigation, HeaderTitle}) => {
       </View>
     );
   };
+  if (!load) {
+    return (
+      <View style={{flex: 1, marginTop: 100}}>
+        <ActivityIndicator color={cSearch} size={'large'} />
+      </View>
+    );
+  }
 
   return (
     <View>
@@ -65,7 +86,7 @@ const LaunchesScreen = ({data, navigation, HeaderTitle}) => {
         {HeaderTitle.toUpperCase()}
       </Text>
       <FlatList
-        data={data}
+        data={arr}
         renderItem={(item, index) => renderItem(item, index)}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}

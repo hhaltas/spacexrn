@@ -6,10 +6,10 @@ import {SmallButton} from '../../components/Form';
 
 const Landpads = ({data, navigation, HeaderTitle}) => {
   const [load, setLoad] = useState(false);
-  //const [data,setData] = useState(null);
-  // React.useEffect(() => {
-  //   console.log('props', navigation);
-  // }, []);
+
+  useEffect(() => {
+    console.log('props', data);
+  }, []);
 
   const renderItem = item => {
     return (
@@ -21,18 +21,18 @@ const Landpads = ({data, navigation, HeaderTitle}) => {
               item.index % 2 === 1 ? backgroundScreen : '#fdfdfd',
           },
         ]}>
-        {item.item.images.large !== null && (
+        {item.item?.images?.large !== null && (
           <View style={{flex: 1, ...center}}>
-            <Image source={item.item.images.large} style={styles.ImageSize} />
+            <Image source={item.item?.images?.large} style={styles.ImageSize} />
           </View>
         )}
         <View style={{flex: 1, padding: 5}}>
           <Text style={styles.Name}> {item.item.name}</Text>
           <Text style={styles.Description} numberOfLines={2}>
             Description :{' '}
-            {item.item.details.length > 80
-              ? item.item.details.split(0, 75) + '...'
-              : item.item.details}
+            {item.item?.details?.length > 80
+              ? item.item?.details?.split(0, 75) + '...'
+              : item.item?.details}
           </Text>
         </View>
         <View style={styles.OpenDetail}>

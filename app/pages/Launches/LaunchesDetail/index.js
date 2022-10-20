@@ -1,11 +1,18 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 
-const index = () => {
+const index = ({navigation, item, props}) => {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    console.log('Detail', navigation.getState().routes[1]?.params?.item);
+    setData(navigation.getState().routes[1]?.params?.item);
+  }, []);
+
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    <ScrollView style={{flex: 1}}>
+      <Text>{JSON.stringify(data, null, 2)}</Text>
+    </ScrollView>
   );
 };
 

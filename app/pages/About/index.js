@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {BigButton} from '../../components/Form';
 import {cTitle} from '../../components/styles/color';
@@ -24,13 +24,15 @@ const AboutScreen = ({navigation}) => {
       });
   };
   return (
-    <View>
+    <ScrollView style={{flex: 1, padding: 10}}>
       <Text>AboutScreen</Text>
       <Text>{JSON.stringify(data, null, 2)}</Text>
-      <BigButton bgColor={cTitle} onPress={() => navigation.navigate('Home')}>
-        Home
-      </BigButton>
-    </View>
+      <View style={{marginTop: 10}}>
+        <BigButton bgColor={cTitle} onPress={() => navigation.navigate('Home')}>
+          Home
+        </BigButton>
+      </View>
+    </ScrollView>
   );
 };
 

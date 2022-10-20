@@ -27,12 +27,6 @@ const HomeScreen = ({navigation}) => {
   ]);
   const [variable, setVariable] = useState([]);
 
-  // useEffect(() => {
-  //   if (value !== null) {
-  //     getListData();
-  //   }
-  // }, [setValue, value]);
-
   useEffect(() => {
     !open ? setOpenDate(true) : setOpenDate(false);
   }, [open]);
@@ -55,15 +49,16 @@ const HomeScreen = ({navigation}) => {
         }),
       );
       setShow(true);
-    } else if (value === 'launches' && date === Date()) {
+    }
+    if (value === 'launches' && date === Date()) {
       setVariable(
         result.data.sort((a, b) => {
           return new Date(b.date_utc) - new Date(a.date_utc);
         }),
       );
       setShow(true);
-    } else if (value === 'landpads' && date) {
-      console.log('*-* girdi');
+    }
+    if (value === 'landpads') {
       setVariable(result.data);
       setShow(true);
     }
@@ -75,7 +70,7 @@ const HomeScreen = ({navigation}) => {
         style={[
           styles.searches,
           {
-            height: 130,
+            height: 150,
             position: 'relative',
           },
         ]}>
@@ -105,7 +100,7 @@ const HomeScreen = ({navigation}) => {
                 mode="BADGE"
               />
             </View>
-            {openDate && (
+            {value !== 'landpads' && openDate && (
               <View>
                 <Datepicker
                   labelTx="date"
@@ -130,7 +125,7 @@ const HomeScreen = ({navigation}) => {
         </BigButton>
       </View>
       <View style={{flex: 1}}>
-        {!show && value === 'landpads' && (
+        {show && value === 'landpads' && (
           <LandpadsScreen
             data={variable}
             navigation={navigation}
